@@ -1,0 +1,51 @@
+<h1>Create Promotion Form</h1>
+
+<form action="/createPromotions" method="post" id="addVideo">
+
+    <div class="form-group">
+        <label>Promotion Name: </label>
+        <input type="text" name="PromotionName" id="PromotionName" required>
+    </div>
+
+    <div>
+        <label>Requirements: </label>
+        <h6>Participants Allowed</h6>
+        <input type="text" name="EmailLimit" id="EmailLimit">
+        {{!-- Need to work on this to encapsulate everything --}}
+        <h6>Redemption Per Person</h6>
+        <input type="number" name="RedemptionPerPerson" id="RedemptionPerPerson" value="1" min="1" required>
+        <h6>Total Redemption</h6>
+        <input type="number" name="TotalRedemption" id="TotalRedemption" value="1" min="1" required>
+    </div>
+
+    <div>
+        <label>Promotion Amount: </label>
+        <input type="number" name="PromotionAmount" id="PromotionAmount" required value="1" min="1" max="100">
+        {{!-- Consider being able to put it to percentage --}}
+    </div>
+
+    <div>
+        <label>Promotion Code: </label>
+        <input type="text" name="PromotionCode" id="PromotionCode" required>
+        {{!-- Can add the checker to make sure is unique or is if previous is not in use --}}
+    </div>
+
+    <div>
+        <label>Purpose: </label>
+        <textarea name="Purpose" id="Purpose" cols="30" rows="10"></textarea>
+    </div>
+
+    <div>
+        <label>Start of Promotion: </label>
+        <input type="date" name="StartOfPromotion" id="StartOfPromotion" required>
+    </div>
+
+    <div>
+        <label>End of Promotion: </label>
+        <input type="date" name="EndOfPromotion" id="EndOfPromotion" required>
+    </div>
+
+    <br>
+    <button id="butAddVideo" type="submit" class="btn btn-primary">Create
+    </button>
+</form>
