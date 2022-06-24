@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const db = require('../config/database');
+const sequelize = require('../config/DBConfig');
+const db = require('../config/DBConfig');
 const Review = db.define('review', {
     title: {
         type: Sequelize.STRING
