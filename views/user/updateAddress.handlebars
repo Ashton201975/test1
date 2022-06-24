@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body">
+            <h3 class="text-center">Update Address</h3>
+            </br>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label>Postal Code</label>
+                    </br>
+                    <input type="text" class="form-control" name="zipcode" id="zipcode" {{#if
+                        user.zipCode}}value="{{user.zipCode}}" {{/if}} required>
+                    <span class="font-weight-bold text-danger" id="oneMapErr" style="display:none">Address
+                        Unavailable</span>
+                    <span class="font-weight-bold text-danger" id="codeErr" style="display:none">Please enter a valid
+                        postal code</span>
+                    </br>
+                    <a href="#" onclick="getOneMapAddress()" tabindex="-1" class="card-link">
+                        <i class="fas fa-home"></i>
+                        &nbsp;Get Postal Address Data
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label>Postal Address</label>
+                    </br>
+                    <input type="text" class="form-control" name="address" id="address" readonly required>
+                </div>
+                <div class="form-group">
+                    <label>Unit No. (if applicable)</label>
+                    </br>
+                    <input type="text" class="form-control" name="unitNo" id="unitNo" placeholder="e.g. #02-10" {{#if
+                        user.unitNo}}value="{{user.unitNo}}" {{/if}}>
+                    <span class="font-weight-bold text-danger" id="unitErr" style="display:none">Please enter a valid
+                        unit No.</span>
+                </div>
+                <button type="submit" id="submitId" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function checkUnitNo() {
+        let pattern = /^\#[0-9]{2}\-[0-9]{2,3}$/;
+        let unitNo = document.getElementById('unitNo').value;
+        if (unitNo != null && unitNo != '') {
+            if (pattern.test(unitNo)) {
+                document.getElementById('submitId').disabled = false;
+                $('#unitErr').hide();
+            } else {
+                document.getElementById('submitId').disabled = true;
+                $('#unitErr').show();
+            }
+        } else {
+            document.getElementById('submitId').disabled = false;
+            $('#unitErr').hide();
+        }
+    }
+    unitNo.addEventListener('input', checkUnitNo);
+
+    window.onload = function () {
+        let search = document.getElementById("zipcode").value;
+        $.ajax({
+            url: 'https://developers.onemap.sg/commonapi/search?searchVal=' + search + '&returnGeom=N&getAddrDetails=Y&pageNum=1',
+            success: function (result) {
+                //Set result to a variable for writing
+                var TrueResult;
+                var blkNo = JSON.stringify(result['results'][0]['BLK_NO']);
+                var roadName = JSON.stringify(result['results'][0]['ROAD_NAME']);
+                TrueResult = blkNo.slice(1, -1) + ' ' + roadName.slice(1, -1)
+                document.getElementById("address").value = (TrueResult);
+            }
+        });
+    }
+</script>

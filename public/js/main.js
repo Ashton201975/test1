@@ -44,6 +44,20 @@ function getOMdbMovie(){
 		}).catch(error => {omdbErr.innerHTML = error;})
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year,month,day].join('/');
+}
+
 $('#postedUpload').on('change', function(){
 	let image = $('#postedUpload')[0].files[0];
 	let formdata = new FormData();
@@ -66,3 +80,149 @@ $('#postedUpload').on('change', function(){
 			}
 	});
 });
+
+$(document).ready(function () {
+	$('#addPromotionForm').bootstrapValidator({
+		// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			PromotionName: {
+				validators: {
+					stringLength: {
+						min: 2,
+					},
+					notEmpty: {
+						message: 'Please enter the Promotion Name'
+					}
+				}
+			},
+			EmailLimit: {
+				validators: {
+					stringLength: {
+						min: 2,
+					},
+					notEmpty: {
+						message: 'This is temp'
+					}
+				}
+			},
+			RedemptionPerPerson: {
+				validators: {
+					notEmpty: {
+						message: 'Please enter the Redemption Limit Per Person'
+					}
+				}
+			},
+			TotalRedemption: {
+				validators: {
+					notEmpty: {
+						message: 'Please enter the Total Redemption Limit'
+					}
+				}
+			},
+			PromotionCode: {
+				validators: {
+					stringLength: {
+						min: 2,
+						max: 8,
+					},
+					notEmpty: {
+						message: 'Please enter the Promotion Code'
+					}
+				}
+			},
+			Purpose: {
+				validators: {
+					stringLength: {
+						min: 2,
+						max: 2000,
+					},
+					notEmpty: {
+						message: 'Please enter the Purpose of the promotion'
+					}
+				}
+			},
+			PromotionAmount: {
+				validators: {
+					notEmpty: {
+						message: 'Please enter the Promotion Amount'
+					}
+				}
+			},
+			StartOfPromotion: {
+				validators: {
+					date: {
+						format: 'YYYY/MM/DD',
+						message: 'This is not a valid date'
+					},
+					notEmpty: {
+						message: 'Please choose a date'
+					},
+					callback: {
+						message: 'The date is not in a valid range',
+						callback: function(value, validator) {
+							var m = new moment(value, 'YYYY-MM-DD', true);
+							if (!m.isValid()) {
+								return false;
+							}
+
+							const today = new Date();
+
+							console.log(EndOfPromotion.value)
+
+							return m.isAfter(formatDate(today))  && m.isBefore(EndOfPromotion.value);
+						}
+					}
+				}
+			},
+			EndOfPromotion: {
+				validators: {
+					date: {
+						format: 'YYYY/MM/DD',
+						message: 'This is not a valid date'
+					},
+					notEmpty: {
+						message: 'Please choose a date'
+					},
+					callback: {
+						message: 'The date is not in a valid range',
+						callback: function(value, validator) {
+							var m = new moment(value, 'YYYY-MM-DD', true);
+							if (!m.isValid()) {
+								return false;
+							}
+
+							return m.isAfter(StartOfPromotion.value);
+						}
+					}
+				}
+			},
+			
+			
+		}
+
+	})
+		.on('success.form.bv', function (e) {
+			$('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+			$('#contact_form').data('bootstrapValidator').resetForm();
+
+			// Prevent form submission
+			e.preventDefault();
+
+			// Get the form instance
+			var $form = $(e.target);
+
+			// Get the BootstrapValidator instance
+			var bv = $form.data('bootstrapValidator');
+
+			// Use Ajax to submit form data
+			$.post($form.attr('action'), $form.serialize(), function (result) {
+				console.log(result);
+			}, 'json');
+		});
+});
+

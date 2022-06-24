@@ -1,0 +1,139 @@
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body">
+            <h3 class="text-center">Account Register</h3>
+            <form action="/user/register" method="post">
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    </br>
+                    {{!-- File Upload --}}
+                    <input type="file" name="profilePicUpload" id="profilePicUpload"
+                        accept="image/png, image/jpeg, image/jpg, image/gif">
+                    {{!-- Poster Image --}}
+                    <img id="profilePic" src="/img/no-image.jpg" alt="" class="border img-thumbnail img-fluid"
+                        style="height: 150px;width:150px;">
+
+                    {{!-- Hidden field to submit URL of poster to the server --}}
+                    <input id="profilePicURL" type="hidden" name="profilePicURL">
+
+                    {{!-- Hidden error message --}}
+                    <div class="font-weight-bold text-danger small" id="profilePicErr" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label>Food Intolerances</label>
+                    <br>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="dairy"
+                                        value="Dairy">
+                                    <label class="form-check-label" for="dairy">Dairy</label>
+                                </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="peanut" value="Peanut">
+                            <label class="form-check-label" for="peanut">Peanut</label>
+                        </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="soy" value="Soy">
+                            <label class="form-check-label" for="soy">Soy</label>
+                        </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="egg" value="Egg">
+                            <label class="form-check-label" for="egg">Egg</label>
+                        </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="seafood"
+                                value="Seafood">
+                            <label class="form-check-label" for="seafood">Seafood</label>
+                        </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="sulfite"
+                                value="Sulfite">
+                            <label class="form-check-label" for="sulfite">Sulfite</label>
+                        </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="gluten" value="Gluten">
+                            <label class="form-check-label" for="gluten">Gluten</label>
+                        </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="sesame" value="Sesame">
+                            <label class="form-check-label" for="sesame">Sesame</label>
+                        </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="treeNut"
+                                value="Tree Nut">
+                            <label class="form-check-label" for="treeNut">Tree Nut</label>
+                        </div>
+                            </td>
+                        </tr>
+                        
+
+
+                        <tr>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="grain" value="Grain">
+                            <label class="form-check-label" for="grain">Grain</label>
+                        </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="shellfish"
+                                value="Shellfish">
+                            <label class="form-check-label" for="shellfish">Shellfish</label>
+                        </div>
+                            </td>
+                            <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="intolerance" id="wheat" value="Wheat">
+                            <label class="form-check-label" for="wheat">Wheat</label>
+                        </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    {{!--<div class="form-check form-check-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-sm" name="otherSub" id="otherSub"
+                                placeholder="Other">
+                        </div>
+                    </div>--}}
+                </div>
+                <div class="form-group">
+                    <label for="oldpassword">Old Password</label>
+                    <input type="password" name="password" class="form-control" value="{{oldpassword}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input type="password" name="password" class="form-control" value="{{password}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirm New Password</label>
+                    <input type="password" name="password2" class="form-control" value="{{password2}}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

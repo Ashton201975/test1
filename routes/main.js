@@ -3,10 +3,41 @@ const req = require('express/lib/request');
 const router = express.Router();
 const alertMessage = require('../helpers/messenger');
 const Promotion = require('../models/Promotion');
+const User = require('../models/User');
+
+const bcrypt = require('bcryptjs'); // for password encryption
+
+const moment = require('moment');
 
 router.get('/', (req, res) => {
+	
+	User.findOne({ where: { role: 'admin' } })
+		.then((Admin) => {
+			if (!Admin) {
+				let password = 'password';
+				// Generate salt hashed password
+				bcrypt.genSalt(10, (err, salt) => {
+					bcrypt.hash(password, salt, (err, hash) => {
+						if (err) throw err;
+						password = hash;
+						
+						User.create({
+							name: 'Admin 1',
+							email: 'appdevproject9@gmail.com',
+							password,
+							role: 'admin',
+							verified: 1,
+						})
+					})
+				})
+			}
+		})
+
+	if (req.user.id) {
+		return res.render('user/profile')
+	}
 	const title = 'Video Jotter';
-	res.render('index', { title: title }) // renders views/index.handlebars
+	res.redirect('http://localhost:3000/')
 });
 
 // User Login Route
@@ -47,90 +78,8 @@ router.get('/logout', (req, res) => {
 	res.redirect('/');
 });
 
-router.get('/test', (req, res) => {
-	res.render('test');
-});
 
-// Assignment Test Codes
 
-router.get('/CreatePromotion', (req, res) => {
-
-	res.render('CreatePromotion');
-});
-
-router.post('/createPromotions', (req, res) => {
-	
-	let errors = [];
-	
-	let { PromotionName, EmailLimit, PromotionAmount, RedemptionPerPerson, TotalRedemption, PromotionCode, Purpose, StartOfPromotion, EndOfPromotion } = req.body;
-
-	if (PromotionName.length < 30) {
-		errors.push({text: "Promotion Name is Too Longgggggggggggggggggggggggggggg"})
-	}
-
-	if (PromotionCode.length > 2 && PromotionCode.length < 7) {
-		errors.push({text: "Promotion Code must be 3-6 letters only"})
-	}
-
-	ValidPromo = 'TRUE';
-
-	Promotion.create({ PromotionName, EmailLimit, RedemptionPerPerson, TotalRedemption, PromotionAmount, PromotionCode, Purpose, StartOfPromotion, EndOfPromotion, ValidPromo })
-		.then(promotion => {
-			alertMessage(res, 'success', promotion.PromotionName, 'fas fa-sign-in-alt', true);
-			res.redirect('/test')
-		})
-});
-
-router.get('/listPromotion', (req, res) => {
-	Promotion.findAll({
-		order: [
-			['id', 'ASC']
-		],
-		raw: true
-	})
-		.then((promotion) => {
-			// pass object to listVideos.handlebar
-			res.render('listPromotion', {
-				promotion: promotion
-			});
-		})
-		.catch(err => console.log(err));
-});
-
-router.get('/updatePromotions/:id', (req, res) => {
-
-	Promotion.findOne({
-        where: {
-            id: req.params.id
-        }
-    }).then((promotion) => {
-		res.render('editPromotion',{
-			promotion
-		})
-	})
-});
-
-const moment = require('moment');
-
-router.put('/saveEditedPromotion/:id', (req,res) =>{
-    
-	let Purpose = req.body.Purpose.slice(0,1999);
-	let StartOfPromotion = moment(req.body.StartOfPromotion, 'DD/MM/YYYY')
-	let EndOfPromotion = moment(req.body.EndOfPromotion, 'DD/MM/YYYY')
-
-    Promotion.update({
-		...req.body,
-		Purpose,
-		StartOfPromotion,
-		EndOfPromotion
-    }, {
-        where: {
-            id: req.params.id
-        }
-    }).then((promotion) => {
-        res.redirect('/listPromotion')
-    }).catch(err => console.log(err))
-});
 
 
 module.exports = router;

@@ -1,0 +1,367 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <h1 style="font-weight: bold">User Profile</h1>
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                                {{#if user.dataValues.imageURL}}
+                                <img src="{{user.dataValues.imageURL}}" id="imgProfile" style="width: 150px; height: 150px"
+                                    class="img-thumbnail" />
+                                {{else}}
+                                <img src="/img/logo.png" id="imgProfile" style="width: 150px; height: 150px"
+                                    class="img-thumbnail" />
+                                {{/if}}
+                            </div>
+                            <div class="userData ml-3">
+                                <table cellpadding="5px">
+                                    <tr>
+                                        <td>
+                                            <form action="/user/saveImage" method="POST">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#imgModal">
+                                                    Profile Picture
+                                                </button>
+
+                                                {{#if user.dataValues.imageURL}}
+                                                <!-- The Modal -->
+                                                <div class="modal" id="imgModal">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Update Profile Picture</h4>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal">&times;</button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                {{!-- File Upload --}}
+                                                                <input type="file" name="profilePicUpload"
+                                                                    id="profilePicUpload"
+                                                                    accept="image/png, image/jpeg, image/jpg, image/gif">
+                                                                {{!-- Poster Image --}}
+                                                                <img id="profilePic" src="{{user.dataValues.imageURL}}" alt=""
+                                                                    class="border img-thumbnail img-fluid"
+                                                                    style="height: 150px;width:150px;">
+
+                                                                {{!-- Hidden field to submit URL of poster to the server
+                                                                --}}
+                                                                <input id="profilePicURL" type="hidden"
+                                                                    name="profilePicURL">
+
+                                                                {{!-- Hidden error message --}}
+                                                                <div class="font-weight-bold text-danger small"
+                                                                    id="profilePicErr" style="display: none;"></div>
+                                                            </div>
+                                                            {{else}}
+
+                                                            <!-- The Modal -->
+                                                            <div class="modal" id="imgModal">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Upload Profile
+                                                                                Picture</h4>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal">&times;</button>
+                                                                        </div>
+
+                                                                        <!-- Modal body -->
+                                                                        <div class="modal-body">
+                                                                            {{!-- File Upload --}}
+                                                                            <input type="file" name="profilePicUpload"
+                                                                                id="profilePicUpload"
+                                                                                accept="image/png, image/jpeg, image/jpg, image/gif">
+                                                                            {{!-- Poster Image --}}
+                                                                            <img id="profilePic" src="/img/no-image.jpg"
+                                                                                alt=""
+                                                                                class="border img-thumbnail img-fluid"
+                                                                                style="height: 150px;width:150px;">
+
+                                                                            {{!-- Hidden field to submit URL of poster
+                                                                            to the server
+                                                                            --}}
+                                                                            <input id="profilePicURL" type="hidden"
+                                                                                name="profilePicURL">
+
+                                                                            {{!-- Hidden error message --}}
+                                                                            <div class="font-weight-bold text-danger small"
+                                                                                id="profilePicErr"
+                                                                                style="display: none;"></div>
+                                                                        </div>
+                                                                        {{/if}}
+                                                                        <!-- Modal footer -->
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">Cancel</button>
+                                                                            <input type="submit" value="Confirm"
+                                                                                class="btn btn-primary">
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button id="updatePassword" class="btn btn-warning" type="button"
+                                                onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updatePassword'">
+                                                Update Password
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <form action="/user/{{user.dataValues.id}}/delete" method="POST">
+                                                <!-- submit to delete here -->
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#myModal">
+                                                    Delete Account
+                                                </button>
+
+                                                <!-- The Modal -->
+                                                <div class="modal" id="myModal">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Delete Confirmation</h4>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal">&times;</button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                Are you sure you want to delete {{user.dataValues.name}}?
+                                                            </div>
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <input type="submit" value="Delete"
+                                                                    class="btn btn-danger">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Cancel</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs mb-4 text-center" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+                                        role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="dietReq-tab" data-toggle="tab" href="#dietReq" role="tab"
+                                        aria-controls="dietReq" aria-selected="false">Dietary Requirement</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="addressInfo-tab" data-toggle="tab" href="#addressInfo"
+                                        role="tab" aria-controls="addressInfo" aria-selected="false">Address Info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="cardInfo-tab" data-toggle="tab" href="#cardInfo" role="tab"
+                                        aria-controls="cardInfo" aria-selected="false">Card Info</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content ml-1" id="myTabContent">
+                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
+                                    aria-labelledby="basicInfo-tab">
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Full Name</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.dataValues.name}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Email</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.dataValues.email}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Gender</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.dataValues.gender}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Birthdate</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{formatDate user.dataValues.birthday 'DD MMM YYYY'}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div class="tab-pane fade show inactive" id="dietReq" role="tabpanel"
+                                    aria-labelledby="dietReq-tab">
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Food Intolerances</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{replaceCommas user.dataValues.intolerances}}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Diet</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{replaceCommas user.dataValues.diet}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="d-grid gap-2 text-center">
+                                        <button id="updateDiet" class="btn btn-success" type="button"
+                                            onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updateDiet'">
+                                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                                            &nbsp;Update Dietary Requirements
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show inactive" id="addressInfo" role="tabpanel"
+                                    aria-labelledby="addressInfo-tab">
+                                    {{#if user.dataValues.zipCode}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Postal Address</label>
+                                        </div>
+                                        <div class="col-md-8 col-6" id="address">
+
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {{#if user.dataValues.unitNo}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Unit No.</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{user.dataValues.unitNo}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {{/if}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Zip code</label>
+                                        </div>
+                                        <div class="col-md-8 col-6" id="zipcode">
+                                            {{user.dataValues.zipCode}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="d-grid gap-2 text-center">
+                                        <button class="btn btn-success" type="button"
+                                            onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updateAddress'">
+                                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                                            &nbsp;Update address
+                                        </button>
+                                    </div>
+                                    {{else}}
+                                    <div class="d-grid gap-2 text-center">
+                                        <button class="btn btn-primary" type="button"
+                                            onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updateAddress'">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                            &nbsp;Add address
+                                        </button>
+                                    </div>
+                                    {{/if}}
+                                </div>
+                                <div class="tab-pane fade show inactive" id="cardInfo" role="tabpanel"
+                                    aria-labelledby="cardInfo-tab">
+                                    {{#if user.dataValues.cardNum}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Credit Card Number</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            card num
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Expiry Date</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            exp date
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {{else}}
+                                    <div class="d-grid gap-2 text-center">
+                                        <button class="btn btn-primary" type="button"><i class="fa fa-plus"
+                                                aria-hidden="true"></i>
+                                            &nbsp;Add your card
+                                        </button>
+                                    </div>
+                                    {{/if}}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        let search = document.getElementById("zipcode").innerHTML;
+        $.ajax({
+            url: 'https://developers.onemap.sg/commonapi/search?searchVal=' + search + '&returnGeom=N&getAddrDetails=Y&pageNum=1',
+            success: function (result) {
+                //Set result to a variable for writing
+                var TrueResult;
+                var blkNo = JSON.stringify(result['results'][0]['BLK_NO']);
+                var roadName = JSON.stringify(result['results'][0]['ROAD_NAME']);
+                TrueResult = blkNo.slice(1, -1) + ' ' + roadName.slice(1, -1)
+                document.getElementById("address").innerHTML = (TrueResult);
+            }
+        });
+    }
+</script>

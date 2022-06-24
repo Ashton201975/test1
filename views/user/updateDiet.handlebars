@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body">
+            <h3 class="text-center">Update Dietary Requirements</h3>
+            </br>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label>Food Intolerances</label>
+                    <br>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="dairy"
+                                        value="Dairy" {{user.dairy}}>
+                                    <label class="form-check-label" for="dairy">Dairy</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="peanut"
+                                        value="Peanut" {{user.peanut}}>
+                                    <label class="form-check-label" for="peanut">Peanut</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="soy"
+                                        value="Soy" {{user.soy}}>
+                                    <label class="form-check-label" for="soy">Soy</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="egg"
+                                        value="Egg" {{user.egg}}>
+                                    <label class="form-check-label" for="egg">Egg</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="seafood"
+                                        value="Seafood" {{user.seafood}}>
+                                    <label class="form-check-label" for="seafood">Seafood</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="sulfite"
+                                        value="Sulfite" {{user.sulfite}}>
+                                    <label class="form-check-label" for="sulfite">Sulfite</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="gluten"
+                                        value="Gluten" {{user.gluten}}>
+                                    <label class="form-check-label" for="gluten">Gluten</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="sesame"
+                                        value="Sesame" {{user.sesame}}>
+                                    <label class="form-check-label" for="sesame">Sesame</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="treeNut"
+                                        value="Tree Nut" {{user.treeNut}}>
+                                    <label class="form-check-label" for="treeNut">Tree Nut</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="grain"
+                                        value="Grain" {{user.grain}}>
+                                    <label class="form-check-label" for="grain">Grain</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="shellfish"
+                                        value="Shellfish" {{user.shellfish}}>
+                                    <label class="form-check-label" for="shellfish">Shellfish</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="intolerance" id="wheat"
+                                        value="Wheat" {{user.wheat}}>
+                                    <label class="form-check-label" for="wheat">Wheat</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form-group">
+                    <label>Diet</label>
+                    </br>
+
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="diet" name="diet">
+                            <option value="None" {{user.none}}>None</option>
+                            <option value="Gluten Free" {{user.glutenFree}}>Gluten Free</option>
+                            <option value="Ketogenic" {{user.ketogenic}}>Ketogenic</option>
+                            <option value="Vegetarian" {{user.vegetarian}}>Vegetarian</option>
+                            <option value="Lacto-Vegetarian" {{user.lactoVegetarian}}>Lacto-Vegetarian</option>
+                            <option value="Ovo-Vegetarian" {{user.ovoVegetarian}}>Ovo-Vegetarian</option>
+                            <option value="Vegan" {{user.vegan}}>Vegan</option>
+                            <option value="Pescetarian" {{user.pescetarian}}>Pescetarian</option>
+                            <option value="Paleo" {{user.paleo}}>Paleo</option>
+                            <option value="Primal" {{user.primal}}>Primal</option>
+                            <option value="Low FODMAP" {{user.lowFODMAP}}>Low FODMAP</option>
+                            <option value="Whole30" {{user.whole30}}>Whole30</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
