@@ -1,3 +1,4 @@
+const { max } = require('moment');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/DBConfig');
 const db = require('../config/DBConfig');
@@ -12,7 +13,7 @@ const Promotion = db.define('promotion', {
         allowNull: false
     },
     EmailLimit: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(2000),
         allowNull: false
     },
     RedemptionPerPerson: {

@@ -158,6 +158,27 @@ router.post('/createPromotions', (req, res) => {
 	let { PromotionName, EmailLimit, PromotionAmount, RedemptionPerPerson, TotalRedemption, PromotionCode, Purpose, StartOfPromotion, EndOfPromotion } = req.body;
 
 	ValidPromo = 'FALSE';
+	let EmailLimits = '';
+
+	if (Array.isArray(EmailLimit)) {
+
+		for (let i = 0; i < EmailLimit.length; i++) {
+			EmailLimits =  EmailLimits + EmailLimit[i] + ","
+		}
+	
+		EmailLimits = EmailLimits.slice(0,-1)
+	
+		EmailLimit = EmailLimits
+
+	}
+	else if (EmailLimit) {
+		
+	}
+	else {
+		EmailLimit = "NONE"
+	}
+
+	
 
 	Promotion.findOne({ where: { PromotionCode: PromotionCode } })
 		.then(promotion => {
@@ -210,27 +231,57 @@ router.get('/updatePromotions/:id', (req, res) => {
 			id: req.params.id
 		}
 	}).then((promotion) => {
-		console.log(promotion)
 
-		const startDate = formatDate(promotion.StartOfPromotion)
-		const endDate = formatDate(promotion.EndOfPromotion)
+		User.findAll()
+		.then(user => {
+			const startDate = formatDate(promotion.StartOfPromotion)
+			const endDate = formatDate(promotion.EndOfPromotion)
 
-		res.render('promotion/editPromotion', {
-			promotion,
-			startDate: startDate,
-			endDate: endDate
-		});
+			let emails = promotion.EmailLimit
+
+			res.render('promotion/editPromotion', {
+				promotion,
+				user,
+				emails: emails,
+				startDate: startDate,
+				endDate: endDate
+			});
+		})
+
+		
 	}).catch(err => console.log(err));
 });
 
 router.put('/saveEditedPromotion/:id', (req, res) => {
 
+	
 	let Purpose = req.body.Purpose.slice(0, 1999);
+	let EmailLimit = req.body.EmailLimit;
 
+	let EmailLimits = '';
+
+	if (Array.isArray(EmailLimit)) {
+
+		for (let i = 0; i < EmailLimit.length; i++) {
+			EmailLimits =  EmailLimits + EmailLimit[i] + ","
+		}
+	
+		EmailLimits = EmailLimits.slice(0,-1)
+	
+		EmailLimit = EmailLimits
+
+	}
+	else if (EmailLimit) {
+		
+	}
+	else {
+		EmailLimit = "NONE"
+	}
 
 	Promotion.update({
 		...req.body,
 		Purpose,
+		EmailLimit,
 	}, {
 		where: {
 			id: req.params.id
